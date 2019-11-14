@@ -6,6 +6,19 @@ on:
       - 'v*'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+    - name: Setup go
+      uses: actions/setup-go@v1
+      with:
+        go-version: '1.13.x'
+    - name: Run Static Checks
+      run: GOBIN=$PWD/bin go install honnef.co/go/tools/cmd/staticcheck && ./bin/staticcheck ./...
+    - name: Run Tests
+      run: go test -race -mod vendor -v ./...
   release:
     runs-on: ubuntu-latest
     needs: [ test ]
