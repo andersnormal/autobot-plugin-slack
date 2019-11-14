@@ -4,7 +4,12 @@
 
 # Autobot Slack Plugin
 
-[![Documentation](https://godoc.org/github.com/andersnormal/autobot?status.svg)](https://godoc.org/github.com/andersnormal/autobot/plugins/plugin-slack)
+<a href='https://github.com/jpoles1/gopherbadger' target='_blank'>![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go%20Coverage-42%25-brightgreen.svg?longCache=true&style=flat)</a>
+![Github Action](https://github.com/andersnormal/autobot-plugin-slack/workflows/Test%20%26%20Build/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/andersnormal/autobot-plugin-slack)](https://goreportcard.com/report/github.com/andersnormal/autobot-plugin-slack)
+[![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Taylor Swift](https://img.shields.io/badge/secured%20by-taylor%20swift-brightgreen.svg)](https://twitter.com/SwiftOnSecurity)
+[![Volkswagen](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
 
 This is a plugin for :robot: [Autobot](https://github.com/andersnormal/autobot) connecting a [Slack Bot](https://slack.com) to it.
 
@@ -23,10 +28,16 @@ The plugin uses the `SLACK_TOKEN` environment variable to connect to the [Slack 
 
 > when you run the plugin via the server, all `--env` parameters are passed to the started plugins.
 
-## Build
+## Run
 
 ```
-go build
+go -mod vendor run main.go
+```
+
+## Build 
+
+```
+go -mod vendor build
 ```
 
 ## License
