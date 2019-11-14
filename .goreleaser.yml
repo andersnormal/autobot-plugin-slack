@@ -40,7 +40,7 @@ archives:
 
 dockers:
   -
-    dockerfile: plugin-slack/Dockerfile
+    dockerfile: Dockerfile
     goos: linux
     goarch: amd64
     binaries:
