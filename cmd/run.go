@@ -9,7 +9,7 @@ import (
 	"github.com/andersnormal/autobot/pkg/plugins/runtime"
 	pb "github.com/andersnormal/autobot/proto"
 
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 const (

@@ -7,7 +7,7 @@ import (
 	pb "github.com/andersnormal/autobot/proto"
 
 	"github.com/golang/protobuf/ptypes/timestamp"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 // FromUserIDWithContext ...
@@ -31,7 +31,7 @@ func FromChannelIDWithContext(ctx context.Context, api *slack.Client, channelID 
 	c := new(pb.Message_Channel)
 
 	// get channel
-	channel, err := api.GetChannelInfoContext(ctx, channelID)
+	channel, err := api.GetConversationInfo(channelID, false)
 	if err != nil {
 		return nil, err
 	}
@@ -40,11 +40,6 @@ func FromChannelIDWithContext(ctx context.Context, api *slack.Client, channelID 
 	c.Name = channel.Name
 
 	return c, nil
-}
-
-// FromChannelID ...
-func FromChannelID(channelID string) *pb.Message_Channel {
-	return &pb.Message_Channel{Id: channelID}
 }
 
 // FromMsgWithContext ...
@@ -62,33 +57,13 @@ func FromMsgWithContext(ctx context.Context, api *slack.Client, msg *slack.Messa
 
 	m.From = user
 
-	// get list of direct message channels
-	im, err := api.GetIMChannelsContext(ctx)
+	// get the channel information
+	channel, err := FromChannelIDWithContext(ctx, api, msg.Channel)
 	if err != nil {
 		return nil, err
 	}
 
-	var isPrivate bool
-	for _, dm := range im {
-		isPrivate = dm.ID == msg.Channel
-
-		if isPrivate {
-			m.Channel = FromChannelID(dm.ID)
-
-			break
-		}
-	}
-
-	if !isPrivate {
-		// resolve channel ...
-		channel, err := FromChannelIDWithContext(ctx, api, msg.Channel)
-		if err != nil {
-			return nil, err
-		}
-
-		m.Channel = channel
-	}
-
+	m.Channel = channel
 	m.TextFormat = pb.Message_PLAIN_TEXT
 	m.Text = msg.Text
 
